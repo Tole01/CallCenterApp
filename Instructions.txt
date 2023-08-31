@@ -1,0 +1,7 @@
+1) Instalar el archivo "python-3.11.5-amd64.exe" que esta en la carpeta principal (instala el lenguaje de python dentro de la computadora)
+
+2) Solo abrir el archivo que se encuentra en la carpeta dist. El archivo se llama "callCenterApp_1.0.exe".
+
+3) Teoricamente, las librerias necesarias para correr el programa estan empaquetadas dentro del archivo .exe, pero en caso de que no, se deben instalar todas las dependencias necesarias para correrlo, las cuales vienen en el requeirements.txt
+
+4) Si el programa esta corriendo y tiene error que cierre el programa, tomar una foto o screenshot del problema y contactarme. Estos errores se encuentran en la terminal, la cual se abre al mismo tiempo que se ejecuta el programa (es una pantalla negra la cual tiene como nombre algo como bash, cmd, C:\Windows\py.exe, o algo similar).

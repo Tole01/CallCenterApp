@@ -3,7 +3,7 @@ import json
 import webview
 import twisted
 from PyQt6.QtGui import QFont
-from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QVBoxLayout, QWidget, QHBoxLayout, QFileDialog, QComboBox, QScrollArea, QTextEdit, QMessageBox
+from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QVBoxLayout, QWidget, QHBoxLayout, QFileDialog, QComboBox, QScrollArea, QTextEdit, QMessageBox, QInputDialog
 from PyQt6.QtCore import Qt
 
 comment_status = {
@@ -82,8 +82,15 @@ class App(QMainWindow):
         scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
         scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
         
+        # Crea el area de despiegue de datos con scroll
         main_layout.addWidget(scroll_area)
-        #main_layout.addLayout(data_layout)
+        
+        # Botón para buscar índice
+        search_button_layout = QHBoxLayout()
+        self.search_button = QPushButton("Buscar núm. de cliente", self)
+        self.search_button.clicked.connect(self.search_index)
+        search_button_layout.addWidget(self.search_button)
+        main_layout.addLayout(search_button_layout)
 
         # Creando el QComboBox y añadiendo opciones
         self.comboBox = QComboBox(self)
@@ -92,16 +99,15 @@ class App(QMainWindow):
         self.comboBox.setVisible(False)  # Inicialmente, el QComboBox estará oculto
 
         # Botón para avanzar al objeto JSON anterior
-        previous_button_layout = QHBoxLayout()
+        previous_next_button_layout = QHBoxLayout()
         self.previous_button = QPushButton("Anterior", self)
         self.previous_button.clicked.connect(self.show_previous_data)
-        previous_button_layout.addWidget(self.previous_button)
+        previous_next_button_layout.addWidget(self.previous_button)
         
         # Botón para avanzar al siguiente objeto JSON
-        next_button_layout = QHBoxLayout()
         self.next_button = QPushButton("Siguiente", self)
         self.next_button.clicked.connect(self.show_next_data)
-        next_button_layout.addWidget(self.next_button)
+        previous_next_button_layout.addWidget(self.next_button)
         
         # Agregar boton de Google Maps
         googleMaps_button_layout = QHBoxLayout()
@@ -127,8 +133,7 @@ class App(QMainWindow):
         self.comboBox.currentTextChanged.connect(self.update_comment_input)
         
         # Mostrar objetos en el main_layout
-        main_layout.addLayout(previous_button_layout)
-        main_layout.addLayout(next_button_layout)
+        main_layout.addLayout(previous_next_button_layout)
         main_layout.addLayout(googleMaps_button_layout)
         main_layout.addLayout(comment_button_layout)
         main_layout.addWidget(self.comboBox)
@@ -263,6 +268,17 @@ class App(QMainWindow):
                 except json.JSONDecodeError:
                     # Puedes agregar un cuadro de diálogo para informar sobre el error en el archivo JSON
                     pass
+
+    def search_index(self):
+        if self.data:
+            input_index, ok = QInputDialog.getInt(self, "Buscar Índice", "Ingrese un número de índice:")
+            if ok:
+                input_index = input_index  # Convertir a índice base 0
+                if 0 <= input_index < len(self.data):
+                    self.current_index = input_index
+                    self.show_data()
+                else:
+                    self.show_error_message("Índice fuera de rango")
 
 app = QApplication(sys.argv)
 window = App()

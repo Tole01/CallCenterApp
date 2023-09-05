@@ -94,7 +94,7 @@ class App(QMainWindow):
 
         # Creando el QComboBox y añadiendo opciones
         self.comboBox = QComboBox(self)
-        options = ["","Test","Colgó" ,"No contestó" ,"No le interesa" ,"Inviable (Muy molesto)" ,"Ël / Ella no toma decisiones" ,"Cliente molesto" ,"Reagendar" ,"Llamada efectiva" ,"Cliente"]
+        options = ["","Colgó" ,"No contestó" ,"No le interesa" ,"Inviable (Muy molesto)" ,"Ël / Ella no toma decisiones" ,"Cliente molesto" ,"Reagendar" ,"Llamada efectiva" ,"Cliente"]
         self.comboBox.addItems(options)
         self.comboBox.setVisible(False)  # Inicialmente, el QComboBox estará oculto
 

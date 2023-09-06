@@ -273,10 +273,16 @@ class App(QMainWindow):
         if self.data:
             input_index, ok = QInputDialog.getInt(self, "Buscar Índice", "Ingrese un número de índice:")
             if ok:
-                input_index = input_index  # Convertir a índice base 0
-                if 0 <= input_index < len(self.data):
-                    self.current_index = input_index
-                    self.show_data()
+                input_index = input_index
+                min_num = min(item.get("Num", float('inf')) for item in self.data)
+                max_num = max(item.get("Num", float('-inf')) for item in self.data)
+                
+                if min_num <= input_index <= max_num:  # Ajustamos el rango para incluir el valor máximo
+                    for item in self.data:
+                        if item.get("Num") == input_index:
+                            self.current_index = self.data.index(item)
+                            self.show_data()
+                            break
                 else:
                     self.show_error_message("Índice fuera de rango")
 
